@@ -16,14 +16,17 @@
         $farm->addAnimal(AnimalTypes::COW);
     }
 
+    print_r("Колличество животных \n");
+    print_r($farm->getAnimalCountByType());
+
     // Собираем продукцию
     for ($i = 0; $i < 7; $i++) 
     { 
         $farm->assembleProducts();
     }
     
-    // Выводим, сколько у кого собрали
-    print_r($farm->products);
+    print_r("Наш урожай \n");
+    print_r($farm->getProducts());
 
     // Добавляем ещё 5 кур
     for ($i = 0; $i < 5; $i++) 
@@ -34,6 +37,7 @@
     // Добавляем 1 корову
     $farm->addAnimal(AnimalTypes::COW);
 
+    print_r("Колличество животных \n");
     print_r($farm->getAnimalCountByType());
 
     // Собираем продукцию
@@ -42,6 +46,6 @@
         $farm->assembleProducts();
     }
 
-    print_r($farm->products);
+    print_r($farm->getProducts());
 
 ?>

@@ -1,54 +1,45 @@
 <?php 
 
-    require_once './Animals/AnimalCreator.php';
-
+    include_once './Animals/AnimalCreator.php';
+    include_once './Ferm/Barn.php';
+    include_once './Ferm/Basket.php';
     class Farm
-    {
-        private array $animals = [];
-        public array $products = [];
+    {   
+        private Barn $barn;
+        private Basket $basket;
+
+        public function __construct()
+        {
+            $this->barn = new Barn();
+            $this->basket = new Basket();
+        }
 
         public function addAnimal(string $animalName)
         {
-            $uniqueId = rand(0, 1000) * rand(1, 6) * rand(5, 65);
-            $this->animals[$uniqueId] = AnimalCreator::сreate($animalName);
+            return $this->barn->addAnimal($animalName);
         }
 
         public function assembleProducts()
         {
-            foreach($this->animals as $animal)
+            foreach($this->barn->getAnimals() as $animal)
             {
-                if(isset($this->products[$animal->getName()]))
-                {
-                    $this->products[$animal->getName()] += $animal->getProducts();
-                }else
-                {
-                    $this->products[$animal->getName()] = $animal->getProducts();
-                }
+                $this->basket->addProduct($animal->getName(), $animal->getProducts());
             }
-
-            return $this->products;
         }
 
         public function getAllProducts()
         {
-            return array_sum($this->products);
+            return array_sum($this->basket->getProducts());
         }
 
         public function getAnimalCountByType()
         {
-            $animalCount = [];
-            foreach($this->animals as $animal)
-            {
-                if(isset($animalCount[$animal->getName()]))
-                {
-                    $animalCount[$animal->getName()] += 1;
-                }else
-                {
-                    $animalCount[$animal->getName()] = 1;
-                }   
-                
-            }
-            return $animalCount; 
+            return $this->barn->getAnimalCountByType();
+        }
+
+        public function getProducts()
+        {
+            return $this->basket->getProducts();
         }
     }
 
